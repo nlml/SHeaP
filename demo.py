@@ -14,11 +14,11 @@ os.environ["PYOPENGL_PLATFORM"] = "egl"
 if __name__ == "__main__":
     # Load SHeaP model
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    sheap_model = load_sheap_model()
+    sheap_model = load_sheap_model(model_type="expressive").to(device)
 
     # Inference on example images
     folder_containing_images = Path("example_images/")
-    image_paths = list(sorted(folder_containing_images.glob("*")))
+    image_paths = list(sorted(folder_containing_images.glob("*.jpg")))
     with torch.no_grad():
         predictions = inference_images_list(
             model=sheap_model,

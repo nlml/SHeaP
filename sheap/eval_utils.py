@@ -20,10 +20,6 @@ class ImsDataset(tud.Dataset):
         self.load_and_preproc_im = load_and_preproc_im
         if self.load_and_preproc_im is None:
             self.load_and_preproc_im = _preproc_im_default
-        self.norm_fn = Normalize(
-            mean=[0.485, 0.456, 0.406],
-            std=[0.229, 0.224, 0.225],
-        )
 
     def __len__(self):
         return len(self.image_paths)
@@ -34,7 +30,6 @@ class ImsDataset(tud.Dataset):
         im = pil_im.convert("RGB").resize(self.img_wh)
         im = np.array(im).astype("float64") / 255.0
         im = torch.from_numpy(im).permute(2, 0, 1).float()
-        im = self.norm_fn(im)
         return im
 
 

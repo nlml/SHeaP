@@ -5,6 +5,24 @@ Code and models for inferencing [SHeaP: Self-Supervised Head Geometry Predictor 
 
 After setting up, run `python demo.py`.
 
+Here is a minimal example script:
+
+```python
+import torch, torchvision.io as io
+from sheap import load_sheap_model
+# Available model variants:
+# sheap_model = load_sheap_model(model_type="paper")
+sheap_model = load_sheap_model(model_type="expressive")
+impath = "example_images/00000200.png"
+image_tensor = io.decode_image(impath).float() / 255
+flame_params_dict = sheap_model(image_tensor[None])
+```
+
+**Note: `model_type`** can be one of 2 values:
+
+- **`"paper"`**: used for paper results; gets best performance on NoW.
+- **`"expressive"`**: perhaps better for real-world use; less regularisation, more expressive.
+
 ## Setup
 
 ### Step 1: Install dependencies

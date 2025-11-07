@@ -95,7 +95,7 @@ def main(
         validation_image_paths = f.readlines()
     all_ims = [base_dir / Path(p.strip()) for p in validation_image_paths]
 
-    model = load_sheap_model(paper_model=True, models_dir=sheap_model_path).to(device)
+    model = load_sheap_model(model_type="paper", models_dir=sheap_model_path).to(device)
 
     preds_outdir = Path(outpath) / "now_preds"
     if preds_outdir.exists():
