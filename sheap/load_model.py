@@ -81,5 +81,5 @@ def load_sheap_model(
     models_dir = Path(models_dir)
     ensure_model_downloaded(model_type=model_type, models_dir=models_dir)
     filename = MODEL_INFO[model_type]["filename"]
-    sheap_model = torch.load(models_dir / filename, weights_only=False)
+    sheap_model = torch.jit.load(models_dir / filename)
     return sheap_model
