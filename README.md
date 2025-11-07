@@ -74,8 +74,6 @@ Now convert FLAME to our format:
 python convert_flame.py
 ```
 
-### Done!
-
 ## Reproduce paper results on NoW dataset
 
 To reproduce the validation results from the paper (median=0.93mm):
