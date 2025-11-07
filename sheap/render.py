@@ -1,34 +1,33 @@
+from typing import Tuple, Union
+
 import numpy as np
 import pyrender
 import torch
 import trimesh
 
 
-def render_mesh(verts, faces, c2w, img_width=512, img_height=512, fov_degrees=14.2539):
-    """
-    Render a mesh using pyrender with a perspective camera defined by FOV.
+def render_mesh(
+    verts: Union[np.ndarray, torch.Tensor],
+    faces: Union[np.ndarray, torch.Tensor],
+    c2w: Union[np.ndarray, torch.Tensor],
+    img_width: int = 512,
+    img_height: int = 512,
+    fov_degrees: Union[float, int] = 14.2539,
+) -> Tuple[np.ndarray, np.ndarray]:
+    """Render a mesh using pyrender with a perspective camera defined by FOV.
 
-    Parameters
-    ----------
-    verts : ndarray (N, 3)
-        Mesh vertex positions.
-    faces : ndarray (F, 3)
-        Triangle vertex indices.
-    c2w : ndarray (4, 4)
-        World-to-camera transform matrix (extrinsics).
-    fov_degrees : float
-        Vertical field of view in degrees.
-    img_width : int
-        Rendered image width in pixels.
-    img_height : int
-        Rendered image height in pixels.
+    Args:
+        verts: Mesh vertex positions of shape (N, 3).
+        faces: Triangle vertex indices of shape (F, 3).
+        c2w: Camera-to-world transform matrix (extrinsics) of shape (4, 4).
+        img_width: Rendered image width in pixels. Default is 512.
+        img_height: Rendered image height in pixels. Default is 512.
+        fov_degrees: Vertical field of view in degrees. Default is 14.2539.
 
-    Returns
-    -------
-    color : ndarray (H, W, 3) uint8
-        RGB image from the render.
-    depth : ndarray (H, W) float32
-        Depth map from the render.
+    Returns:
+        Tuple containing:
+            - color: RGB image from the render of shape (H, W, 3) as uint8.
+            - depth: Depth map from the render of shape (H, W) as float32.
     """
     if isinstance(c2w, torch.Tensor):
         c2w = c2w.detach().cpu().numpy()

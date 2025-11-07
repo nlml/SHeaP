@@ -9,6 +9,17 @@ from torch import Tensor
 
 
 def load_pkl_format_flame_model(path: Union[str, os.PathLike, Path]) -> Dict[str, Tensor]:
+    """Load a FLAME model from a pickle file format.
+
+    Loads FLAME model parameters including faces, kinematic tree, joint regressor,
+    shape directions, joints, weights, pose directions, and vertex template.
+
+    Args:
+        path: Path to the FLAME model pickle file.
+
+    Returns:
+        Dictionary containing FLAME model parameters as tensors.
+    """
     flame_params: Dict[str, Tensor] = {}
     with open(path, "rb") as f:
         flame_data = pickle.load(f, encoding="latin1")

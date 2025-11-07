@@ -33,6 +33,7 @@ from sheap import load_sheap_model
 # sheap_model = load_sheap_model(model_type="paper")
 sheap_model = load_sheap_model(model_type="expressive")
 impath = "example_images/00000200.jpg"
+# input: (N, 3, 224, 224) | pixel values in [0, 1]
 image_tensor = io.decode_image(impath).float() / 255
 # flame_params_dict contains predicted FLAME parameters
 flame_params_dict = sheap_model(image_tensor[None])

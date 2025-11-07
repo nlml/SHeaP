@@ -1,10 +1,11 @@
 import urllib.request
 from pathlib import Path
+from typing import Dict, Literal
 
 import torch
 
 # Map model types to filenames and (optional) download URLs
-MODEL_INFO = {
+MODEL_INFO: Dict[str, Dict[str, str]] = {
     "paper": {
         "filename": "model_paper.pt",
         "url": "https://github.com/nlml/sheap/releases/download/v1.0.0/model_paper.pt",
@@ -16,15 +17,19 @@ MODEL_INFO = {
 }
 
 
-def ensure_model_downloaded(model_type: str = "paper", models_dir: Path = Path("./models")):
+def ensure_model_downloaded(
+    model_type: Literal["paper", "expressive"] = "paper", models_dir: Path = Path("./models")
+) -> None:
     """Ensure the requested model is present locally, downloading if needed.
 
-    Parameters
-    ----------
-    model_type : {"paper", "expressive"}
-        Which model variant to use.
-    models_dir : Path
-        Directory where models are stored.
+    Args:
+        model_type: Which model variant to use. Valid options are "paper" or "expressive".
+            Default is "paper".
+        models_dir: Directory where models are stored. Default is "./models".
+
+    Raises:
+        ValueError: If model_type is not recognized.
+        FileNotFoundError: If model file is not found and no download URL is configured.
     """
     if model_type not in MODEL_INFO:
         valid = ", ".join(MODEL_INFO.keys())
@@ -50,24 +55,24 @@ def ensure_model_downloaded(model_type: str = "paper", models_dir: Path = Path("
     urllib.request.urlretrieve(url, model_path)
 
 
-def load_sheap_model(model_type: str = "paper", models_dir: Path = Path("./models")):
-    """
-    Load the SHeaP model as a PyTorch JIT trace.
+def load_sheap_model(
+    model_type: Literal["paper", "expressive"] = "paper", models_dir: Path = Path("./models")
+) -> torch.jit.ScriptModule:
+    """Load the SHeaP model as a PyTorch JIT trace.
 
     The function will download the model if it is not present locally (if a URL is
     configured for the selected model_type).
 
-    Parameters
-    ----------
-    model_type : {"paper", "expressive"}
-        Which model variant to load. Defaults to "paper" for backward compatibility.
-    models_dir : Path
-        Directory where models are stored.
+    Args:
+        model_type: Which model variant to load. Valid options are "paper" or "expressive".
+            Default is "paper" for backward compatibility.
+        models_dir: Directory where models are stored. Default is "./models".
 
-    Returns
-    -------
-    torch.jit.ScriptModule
-        The loaded SHeaP model.
+    Returns:
+        The loaded SHeaP model as a PyTorch JIT ScriptModule.
+
+    Raises:
+        ValueError: If model_type is not recognized.
     """
     if model_type not in MODEL_INFO:
         valid = ", ".join(MODEL_INFO.keys())
