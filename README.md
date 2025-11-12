@@ -22,7 +22,7 @@ This repository contains code and models for the **FLAME parameter inference onl
 
 ## Example usage
 
-For a simple example, run `python demo.py`.
+**After setting up**, for a simple example, run `python demo.py`.
 
 To run on a video you can use:
 
