@@ -22,9 +22,15 @@ This repository contains code and models for the **FLAME parameter inference onl
 
 ## Example usage
 
-After setting up, run `python demo.py`.
+For a simple example, run `python demo.py`.
 
-To run on a video use e.g.: `python video_demo.py example_videos/dafoe.mp4`. It will produce the result in [example_videos/dafoe_rendered.mp4](https://github.com/nlml/SHeaP/blob/main/example_videos/dafoe_rendered.mp4).
+To run on a video you can use:
+
+```bash
+python video_demo.py example_videos/dafoe.mp4
+```
+
+The above command will produce the result in [example_videos/dafoe_rendered.mp4](https://github.com/nlml/SHeaP/blob/main/example_videos/dafoe_rendered.mp4).
 
 Or, here is a minimal example script:
 
